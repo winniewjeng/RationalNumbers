@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char** argv) {
 
     Rational r;
-    Rational r1(1, 0);
+    Rational r1(1, 2);
     Rational r2(1, 2);
     char option = ' ';
 
@@ -20,10 +20,10 @@ int main(int argc, char** argv) {
         cout << "[A] [B] e[X]it:  ";
         cin >> option;
 
-        if (option == 'A') {
+        if (toupper(option) == 'A') {
             cout << "A: ";
             cin >> r1;
-        } else if (option == 'B') {
+        } else if (toupper(option) == 'B') {
             cout << "B: ";
             cin >> r2;
         }

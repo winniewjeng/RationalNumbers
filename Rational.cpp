@@ -2,8 +2,6 @@
 
 #include "Rational.h"
 
-//using namespace std;
-
 //constructor
 
 Rational::Rational() {
@@ -51,7 +49,7 @@ void Rational::print_operations(Rational num1, Rational num2) const {
     cout << " = ";
     cout << num1 * num2;
     cout << endl;
-    
+
     num1.print_rational();
     cout << " / ";
     num2.print_rational();
@@ -84,8 +82,14 @@ void Rational::reset() {
 }
 
 void Rational::set(int num, int denom) {
-    _num = num;
-    _denom = denom;
+
+    if (denom != 0) {
+        _num = num;
+        _denom = denom;
+    } else {
+
+    }
+
 }
 
 void Rational::set_numerator(int n) {
@@ -113,9 +117,6 @@ Rational operator+(const Rational &num1, const Rational &num2) {
     num = num1._num * num2._denom + num2._num * num1._denom;
 
     return Rational(num, denom);
-
-
-
 }
 
 Rational operator-(const Rational &num1, const Rational &num2) {
@@ -133,18 +134,35 @@ Rational operator-(const Rational &num1, const Rational &num2) {
 
 Rational operator/(const Rational &num1, const Rational &num2) {
 
-    int num = num1._num * num2._denom;
-    int denom = num1._denom * num2._num;
+    if (num1.error() == 0 && num2.error() == 0) {
+        int num = num1._num * num2._denom;
+        int denom = num1._denom * num2._num;
+        return Rational(num, denom);
 
-    return Rational(num, denom);
+    }
+    cout << num1.description();
+    return NULL;
+
+
+    //    int num = num1._num * num2._denom;
+    //    int denom = num1._denom * num2._num;
+    //
+    //    return Rational(num, denom);
 }
 
 Rational operator*(const Rational &num1, const Rational &num2) {
 
-    int num = num1._num * num2._num;
-    int denom = num1._denom * num2._denom;
+    if (num1.error() == 0 && num2.error() == 0) {
+        int num = num1._num * num2._num;
+        int denom = num1._denom * num2._denom;
+        return Rational(num, denom);
 
-    return Rational(num, denom);
+    }
+    cout << num1.description();
+    return NULL;
+
+
+
 }
 
 //insertion operator
@@ -152,13 +170,12 @@ Rational operator*(const Rational &num1, const Rational &num2) {
 ostream& operator<<(ostream &outs, const Rational &num) {
 
     if (num.error() == 0) {
-        outs << " " << num._num << "/" << num._denom << endl;
+        outs << " " << num._num << "/" << num._denom;
         return outs;
     } else {
         outs << num.description();
         return outs;
     }
-
 }
 
 //extraction operator
@@ -168,7 +185,6 @@ istream& operator>>(istream &ins, Rational &num) {
     ins >> num._num;
     ins >> slash;
     ins >> num._denom;
-
     num._error = num.error();
 
     return ins;
